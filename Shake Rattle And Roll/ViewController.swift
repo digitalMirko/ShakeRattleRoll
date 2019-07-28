@@ -45,11 +45,40 @@ class ViewController: UIViewController {
     // Button Actions performed
     @IBAction func startGame(_ sender: Any) {
         
-        // trigger timer every 1 second to run function
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startCounter), userInfo: nil, repeats: true)
+        // Starts game when time is 10
+        if timeInt == 10 {
+            
+            // trigger timer every 1 second to run function
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startCounter), userInfo: nil, repeats: true)
+            
+            // allows shaking motion to get point awarded
+            modeInt = 1
+            
+            // disable the button for our user during game, so device can only be shaken during play
+            startGameButton.isEnabled = false
+            // fade button to 25%
+            startGameButton.alpha = 0.25
+            // changes title of button to blank
+            startGameButton.setTitle("Shake Me Now", for: UIControl.State.normal)
+        }
         
-        // allows shaking motion to get point awarded
-        modeInt = 1
+        if timeInt == 0 {
+            
+            // resetting time back to 10
+            timeInt = 10
+            // resetting score to 0
+            scoreInt = 0
+            
+            // updates time label
+            timeLabel.text = String(timeInt)
+            // updates score label
+            scoreLabel.text = String(scoreInt)
+            // updates image back to default
+            imageView.image = UIImage(named: "Face1")
+            // resets the button label
+            startGameButton.setTitle("Start Game", for: UIControl.State.normal)
+            
+        }
         
     }
     // starts the counter
@@ -65,6 +94,14 @@ class ViewController: UIViewController {
             
             // game over, any more shaking no points will be awarded
             modeInt = 0
+            
+            // re-enables button to be used
+            startGameButton.isEnabled = true
+            // button not faded any more
+            startGameButton.alpha = 1
+            // changes title of button
+            startGameButton.setTitle("Restart", for: UIControl.State.normal)
+
         }
     }
     
@@ -83,6 +120,18 @@ class ViewController: UIViewController {
                 scoreInt += 1
                 // updates label with score update
                 scoreLabel.text = String(scoreInt)
+                
+                // advanced image displayed to the next one in sequence
+                imageInt += 1
+                
+                // resets the image back to 1 when the counter hits 13
+                // so it can continue the back and fourth animation process
+                if imageInt == 13 {
+                    imageInt = 1
+                }
+                
+                // display new image
+                imageView.image = UIImage(named: "Face\(imageInt)")
             }
         }
     }
