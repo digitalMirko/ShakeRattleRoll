@@ -45,10 +45,46 @@ class ViewController: UIViewController {
     // Button Actions performed
     @IBAction func startGame(_ sender: Any) {
         
+        // trigger timer every 1 second to run function
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startCounter), userInfo: nil, repeats: true)
+        
+        // allows shaking motion to get point awarded
+        modeInt = 1
         
     }
+    // starts the counter
+    @objc func startCounter(){
+        // counts down time, taking away 1
+        timeInt -= 1
+        // displays 1 taken away from time
+        timeLabel.text = String(timeInt)
+        
+        // stops timer at 0
+        if timeInt == 0 {
+            timer.invalidate()
+            
+            // game over, any more shaking no points will be awarded
+            modeInt = 0
+        }
+    }
     
-
-
+    // Allows us to detect shake motion
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    // detect if motion has been shaken and perform action
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            
+            // if device is shaken after 'Start Game' button is clicked
+            if modeInt == 1 {
+                // score goes up by 1
+                scoreInt += 1
+                // updates label with score update
+                scoreLabel.text = String(scoreInt)
+            }
+        }
+    }
 }
 
