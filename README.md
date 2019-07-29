@@ -15,7 +15,6 @@ to count down from 10 to 0. Once the game is over no more points are possible. I
 need to go is click the button on the bottom which is now labeled 'Restart' to start the game over from the beginning.
 Its a fun game for all ages to try and see how many points can they rack up against other people. 
 
-Coming soon:
 Details and the screen cap images of the app in use can be found on <a href="http://digitalmirko.com/iOSApps.html">Digital Mirko</a>.
 
 Screen Cap on a iPhone Xr device:(shown below)</br>
